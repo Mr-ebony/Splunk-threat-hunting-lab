@@ -8,19 +8,97 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
 ## 🧰 Tools Used
 - Splunk Free (local install)
 - Kali Linux (attacker)
-- Ubuntu Linux (victim)
+- Windows (victim)
 - VirtualBox
 
 ## 🛠️ Lab Setup
-1. Installed Splunk on Ubuntu
-2. Monitored `/var/log/auth.log`
-3. Attacked victim with Hydra from Kali
+1. Installed Splunk on Windows
+    + Download **Splunk Enterprise (Free)** for Windows
+    + Install it: 
+      + double-click the `.msi` installer
+2. Import 'WinEventLog:Security' into Splunk
+   + To Add Logs:
+     + In Splunk > Go to **Settings** > **Add Data**
+     + Choose **Monitor File/Directory**
+     + Select **Local Event Logs**
+     + From the WinEventLog, Select **Security**
+     + Set the source name to something like `windows_security_log`
+     + Save and let Splunk index the logs
 
 ## 💣 Attack Simulation
-- **Command**: `hydra -l root -P rockyou.txt ssh://<victim-ip>`
-- **Effect**: Many failed SSH logins
+1. Attacked victim with Hydra from Kali
+- **Command**: `hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://<victim-windows-ip>`
+    + `Administrator` with any valid or invalid Windows username
+    + `<victim-windows-ip>` with your Windows VM IP address
+- **Effect**: Windows logs failed login attempts **(Event ID 4625)** in the Security Event Log.
 
-## 🔍 Threat Hunting in Splunk
+## 🔍 Threat Hunting in Splunk || Searching in Splunk (Windows Failed Logins)
 **Search used**:
 ```spl
-index=* "Failed password"
+source="WinEventLog:Security" EventCode=4625 index=* "Failed password" 
+```
+
+## 🔔 Create An Alert in Splunk for Failed Logins
+- Go to **Splunk Web**
+- **Click** `Search & Reporting` app
+- **Query**: `source="WinEventLog:Security" EventCode=4625`
+- Click **Save As** → Failed Windows Logins Alert
+- Fill in the alert settings:
+  + **Title:** Failed Windows Logins Alert
+  + **Description:** Alert for Event ID 4625 - failed login attempts
+  + **Alert Type:** Scheduled
+  + **Runs Every**: 5 minutes
+  + **Triggers Alert When**: Number of results > 0
+- Under **Actions**, Choose:
+  + [✓] Add to Triggered Alerts
+  + (Optional) Email or script actions (requires setup)
+- Click **Save**
+##### 📌 This alert will now check every 5 minutes and trigger if any failed logins are found.
+
+## 📈 Dashboard Panels
+1. **Failed Logins by Username**  
+   - Shows which usernames were targeted most.
+2. **Failed Logins Over Time**  
+   - Visual trend of login attempts.
+3. **Top Attacking IPs**  
+   - Source IPs making failed login attempts.
+  
+## 🛡 Detection Rules & MITRE ATT&CK Mapping
+
+### 🔍 What This Project Does
+- Detects brute-force login attempts on a Windows machine.
+  #### Select a Technique from MITRE ATT&CK
+  I used the techniques tied to brute-force login:
+  + **Tactic**: Credential Access
+  + **Technique**: [Brute Force - T1110](https://attack.mitre.org/techniques/T1110/)
+- Maps findings to MITRE ATT&CK techniques.
+
+  #### 📏 Detection Logic
+```spl
+source="WinEventLog:Security" EventCode=4625
+| stats count by Account_Name, ComputerName
+| where count > 5
+ ```
+  **The above will flag accounts with more than 5 failed logins.**
+  ➡️ Now save it as a detection rule:
+  + Go to Search & Reporting
+  + Run the query above
+  + Click Save As → Alert
+  + Name it: `Brute Force Detection - T1110`
+  + Set to run every 5 minutes
+  + Set Trigger Condition: if number of results > 0
+
+  **Simple table describing the MITRE ATT&CK Mapping**
+    
+| Tactic             | Technique           | Technique ID | Detection Logic                              |
+|--------------------|---------------------|--------------|-----------------------------------------------|
+| Credential Access | Brute Force         | T1110        | > 5 failed login attempts for same username   |
+| Initial Access    | Valid Accounts      | T1078        | Successful login after multiple failures      |
+
+## 🧠 Key Learnings
+- Real-time alerting with Splunk
+- Building threat dashboards
+- Visual correlation of attacker behaviour
+
+## 📸 Screenshots
+See the `/screenshots/` folder for visuals of alert setup and dashboard panels.
