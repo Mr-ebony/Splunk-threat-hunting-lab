@@ -12,11 +12,11 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
 - VirtualBox
 
 ## 🛠️ Lab Setup
-1. Installed Splunk on Windows
+1. Installed Splunk on Windows (Please see image 1)
     + Download **Splunk Enterprise (Free)** for Windows
     + Install it: 
       + double-click the `.msi` installer
-2. Import 'WinEventLog:Security' into Splunk
+2. Import 'WinEventLog:Security' into Splunk (Please see image 2)
    + To Add Logs:
      + In Splunk > Go to **Settings** > **Add Data**
      + Choose **Monitor File/Directory**
