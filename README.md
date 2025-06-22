@@ -57,12 +57,40 @@ source="WinEventLog:Security" EventCode=4625 index=* "Failed password"
 
 ## 📈 Dashboard Panels
 1. **Failed Logins by Username**  
-   - Shows which usernames were targeted most.
+   ##### Shows which usernames were targeted most.
++ Go to **Search & Reporting** again
++ Run this query to get failed login attempts per username:
+```spl
+  source="WinEventLog:Security" EventCode=4625
+  | stats count by Account_Name
+```
++ Click **Visualisation tab**, choose `Bar Chart`
++ Click **Save As → Dashboard Panel**
+    + **Dashboard Title:** `Windows Threat Hunting`
+    + **Panel Title:** `Failed Logins by Username`
+    + Click **Save**
 2. **Failed Logins Over Time**  
-   - Visual trend of login attempts.
+   ##### Visual trend of login attempts
++ New Search:
+```spl
+source="WinEventLog:Security" EventCode=4625
+| timechart count by Account_Name
+```
++ Visualize as `Line Chart`
++ Save as:
+  + Panel Title: `Failed Logins Over Time`
 3. **Top Attacking IPs**  
-   - Source IPs making failed login attempts.
-  
+   ##### Source IPs making failed login attempts.
++ New Search:
+```spl
+source="WinEventLog:Security" EventCode=4625
+| stats count by Client_Address
+```
+(If `Client_Address` isn't showing, use `src` or `Workstation_Name`)
++ Visualize as `Pie Chart` or `Bar Chart`
++ Save as:
+  + **Panel Title:** `Top Attacking IPs`
+
 ## 🛡 Detection Rules & MITRE ATT&CK Mapping
 
 ### 🔍 What This Project Does
@@ -73,6 +101,8 @@ source="WinEventLog:Security" EventCode=4625 index=* "Failed password"
   + **Technique**: [Brute Force - T1110](https://attack.mitre.org/techniques/T1110/)
 - Maps findings to MITRE ATT&CK techniques.
 
+**You already simulated this with Hydra. Now you’ll map your Splunk query to this technique.**
+
   #### 📏 Detection Logic
 ```spl
 source="WinEventLog:Security" EventCode=4625
@@ -80,6 +110,7 @@ source="WinEventLog:Security" EventCode=4625
 | where count > 5
  ```
   **The above will flag accounts with more than 5 failed logins.**
+  
   ➡️ Now save it as a detection rule:
   + Go to Search & Reporting
   + Run the query above
@@ -96,9 +127,11 @@ source="WinEventLog:Security" EventCode=4625
 | Initial Access    | Valid Accounts      | T1078        | Successful login after multiple failures      |
 
 ## 🧠 Key Learnings
+- Brute-force attack with Hydra
 - Real-time alerting with Splunk
 - Building threat dashboards
 - Visual correlation of attacker behaviour
+- MITRE ATT&CK
 
 ## 📸 Screenshots
 See the `/screenshots/` folder for visuals of alert setup and dashboard panels.
