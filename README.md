@@ -65,7 +65,7 @@ source="WinEventLog:Security" EventCode=4625
 + Run this query to get failed login attempts per username:
 ```spl
   source="WinEventLog:Security" EventCode=4625
-  | stats count by host
+  | stats count by "Account_Name"
 ```
 + Click **Visualisation tab**, choose `Bar Chart`
 + Click **Save As → Dashboard Panel**
@@ -77,7 +77,7 @@ source="WinEventLog:Security" EventCode=4625
 + New Search:
 ```spl
 source="WinEventLog:Security" EventCode=4625
-| timechart count by host
+| timechart count by "Account_Name"
 ```
 + Visualize as `Line Chart`
 + Save as:
