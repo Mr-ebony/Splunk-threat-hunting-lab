@@ -59,7 +59,7 @@ source="WinEventLog:Security" EventCode=4625
 ##### 📌 This alert will now check every 1 hour and trigger if any failed logins are found.
 
 ## 📈 Dashboard Panels
-1. **Failed Logins by Username** (Please see **Image 7, 8**)  
+1. **Failed Logins by Username** (Please see **Image 7, 8, 9**)  
    ##### Shows which usernames were targeted most.
 + Go to **Search & Reporting** again
 + Run this query to get failed login attempts per username:
@@ -72,7 +72,7 @@ source="WinEventLog:Security" EventCode=4625
     + **Dashboard Title:** `Windows Threat Hunting`
     + **Panel Title:** `Failed Logins by Username`
     + Click **Save**
-2. **Failed Logins Over Time** (Please see **Image 9, 10, 11**) 
+2. **Failed Logins Over Time** (Please see **Image 10, 11, 12**) 
    ##### Visual trend of login attempts
 + New Search:
 ```spl
@@ -87,7 +87,7 @@ source="WinEventLog:Security" EventCode=4625
 + New Search:
 ```spl
 source="WinEventLog:Security" EventCode=4625
-| stats count by Client_Address
+| stats count by host
 ```
 (If `Client_Address` isn't showing, use `src` or `Workstation_Name`)
 + Visualize as `Pie Chart` or `Bar Chart`
