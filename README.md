@@ -45,7 +45,7 @@ source="WinEventLog:Security" EventCode=4625
 - Go to **Splunk Web**
 - **Click** `Search & Reporting` app
 - **Query**: `source="WinEventLog:Security" EventCode=4625`
-- Click **Save As** → Failed Windows Logins Alert
+- Click **Save As** → Alert
 - Fill in the alert settings:
   + **Title:** Failed Windows Logins Alert
   + **Description:** Alert for Event ID 4625 - failed login attempts
