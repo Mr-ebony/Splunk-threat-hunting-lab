@@ -36,7 +36,7 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
 **Note:** The initial idea was to use a password from **/usr/share/wordlists/rockyou**, but the number of passwords will be too much and time-consuming. I generated a random password (**test.txt**) (please see **image 4**), which was then used in the Brute Force Attack.
 
 ## 🔍 Threat Hunting in Splunk || Searching in Splunk (Windows Failed Logins)
-**Search used**:
+**Search used** (Please see **Image 5**):
 ```spl
 source="WinEventLog:Security" EventCode=4625  
 ```
