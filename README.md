@@ -38,7 +38,7 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
 ## 🔍 Threat Hunting in Splunk || Searching in Splunk (Windows Failed Logins)
 **Search used**:
 ```spl
-source="WinEventLog:Security" EventCode=4625 index=* "Failed password" 
+source="WinEventLog:Security" EventCode=4625  
 ```
 
 ## 🔔 Create An Alert in Splunk for Failed Logins
