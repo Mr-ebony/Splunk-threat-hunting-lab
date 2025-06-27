@@ -32,6 +32,7 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
     + `<victim-windows-ip>` with your Windows VM IP address
     + You can check your remote desktop (rdp) port 3389 is open (please see **Port 3389 scan**). If it isn't open, could you turn on the remote desktop?
 - **Effect**: Windows logs failed login attempts **(Event ID 4625)** in the Security Event Log.
+
 **Note:** The initial idea was to use a password from /usr/share/wordlists/rockyou, but the number of passwords will be too much and time-consuming. I generated a random password (**test.txt**) (please see **image 4**), which was then used in the Brute Force Attack.
 
 ## 🔍 Threat Hunting in Splunk || Searching in Splunk (Windows Failed Logins)
