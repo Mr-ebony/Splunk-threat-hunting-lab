@@ -106,7 +106,7 @@ source="WinEventLog:Security" EventCode=4625
 
 **You already simulated this with Hydra. Now you’ll map your Splunk query to this technique.**
 
-  #### 📏 Detection Logic
+  #### 📏 Detection Logic (Please see **Image 16, 17, 18**)
 ```spl
 source="WinEventLog:Security" EventCode=4625
 | stats count by Account_Name, ComputerName
@@ -119,8 +119,11 @@ source="WinEventLog:Security" EventCode=4625
   + Run the query above
   + Click Save As → Alert
   + Name it: `Brute Force Detection - T1110`
-  + Set to run every 5 minutes
+  + Set to run every 1 hour
   + Set Trigger Condition: if number of results > 0
+  + Under **Actions**, Choose:
+      + [✓] Add to Triggered Alerts
+      + (Optional) Email or script actions (requires setup)
 
   **Simple table describing the MITRE ATT&CK Mapping**
     
