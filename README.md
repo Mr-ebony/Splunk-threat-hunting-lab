@@ -42,7 +42,7 @@ source="WinEventLog:Security" EventCode=4625
 ```
 
 ## 🔔 Create An Alert in Splunk for Failed Logins
-- Go to **Splunk Web** (Please see **Image 6**)
+- Go to **Splunk Web** (Please see **Image 6, 6.1**)
 - **Click** `Search & Reporting` app
 - **Query**: `source="WinEventLog:Security" EventCode=4625`
 - Click **Save As** → Alert
@@ -140,4 +140,4 @@ source="WinEventLog:Security" EventCode=4625
 - MITRE ATT&CK
 
 ## 📸 Screenshots
-See the `/screenshots/` folder for visuals of alert setup and dashboard panels.
+Refer to the `/screenshots/` folder for visual examples of alert setup and dashboard panels.
