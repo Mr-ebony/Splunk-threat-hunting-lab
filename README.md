@@ -26,13 +26,13 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
      + Save and let Splunk index the logs
 
 ## 💣 Attack Simulation
-1. Attacked victim with Hydra from Kali (Please see **image 3**)
+1. Attacked the victim with Hydra from Kali (Please see **image 3**)
 - **Command**: `hydra -l Administrator -P ~/test.txt rdp://<victim-windows-ip>`
     + `Administrator` with any valid or invalid Windows username
     + `<victim-windows-ip>` with your Windows VM IP address
-    + You can check your remote desktop (rdp) port 3389 is open (please see **Port 3389 scan**). If not open, turn on the remote desktop.
+    + You can check your remote desktop (rdp) port 3389 is open (please see **Port 3389 scan**). If it isn't open, could you turn on the remote desktop?
 - **Effect**: Windows logs failed login attempts **(Event ID 4625)** in the Security Event Log.
-**Note:** the initial idea was to use password from /usr/share/wordlists/rockyou, but the number of password will be too much and time consuming. So, I generated random password (**test.txt**) (Please see **image 4**) which was then use for the Brute Force Attack.
+**Note:** The initial idea was to use a password from /usr/share/wordlists/rockyou, but the number of passwords will be too much and time-consuming. I generated a random password (**test.txt**) (please see **image 4**), which was then used in the Brute Force Attack.
 
 ## 🔍 Threat Hunting in Splunk || Searching in Splunk (Windows Failed Logins)
 **Search used**:
