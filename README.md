@@ -82,15 +82,15 @@ source="WinEventLog:Security" EventCode=4625
 + Visualize as `Line Chart`
 + Save as:
   + Panel Title: `Failed Logins Over Time`
-3. **Top Attacking IPs**  
+3. **Top Attacking IPs** (Please see **Image 13, 14, 15**) 
    ##### Source IPs making failed login attempts.
 + New Search:
 ```spl
 source="WinEventLog:Security" EventCode=4625
-| stats count by host
+| stats count by "Source_Network_Address"
 ```
-(If `Client_Address` isn't showing, use `src` or `Workstation_Name`)
-+ Visualize as `Pie Chart` or `Bar Chart`
+
++ Visualize as `Pie Chart`
 + Save as:
   + **Panel Title:** `Top Attacking IPs`
 
