@@ -30,7 +30,7 @@ Note: This project should be read in combination with the [My-Home-SOC-Lab](http
 - **Command**: `hydra -l Administrator -P ~/test.txt rdp://<victim-windows-ip>`
     + `Administrator` with any valid or invalid Windows username
     + `<victim-windows-ip>` with your Windows VM IP address
-    + You can check your remote desktop (rdp) port 3389 is open (please see **Port 3389 scan**)
+    + You can check your remote desktop (rdp) port 3389 is open (please see **Port 3389 scan**). If not open, turn on the remote desktop.
 - **Effect**: Windows logs failed login attempts **(Event ID 4625)** in the Security Event Log.
 **Note:** the initial idea was to use password from /usr/share/wordlists/rockyou, but the number of password will be too much and time consuming. So, I generated random password (**test.txt**) (Please see **image 4**) which was then use for the Brute Force Attack.
 
